@@ -1,0 +1,130 @@
+/**
+ * Emma Carlson
+ * 
+ * Email Application
+ * 5/20/22
+ * 
+ * Program that creates email accounts and random password for any
+ * company's employees. Also stores alternate email, inbox capacity,
+ * and department of employee.
+ */
+
+package EmailApplication;
+
+import java.util.Scanner;
+
+public class Email {
+	
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String password;
+	private String department;
+	private String alternateEmail;
+	private int mailboxCapacity = 50;
+	private String companySuffix = "@anyCompany.com";
+	
+	// builds Email Obj and fills out all info
+	public Email(String first, String last) {
+		this.firstName = first;
+		this.lastName = last;
+		
+		System.out.println("EMAIL CREATED: " + this.firstName + " " 
+		+ this.lastName + "\n");
+		
+		this.setDepartment();
+		this.setEmail();
+		this.setAlternateEmail();
+		this.setPassword();
+	}
+	
+	public void setName(String newFirst, String newLast) {
+		firstName = newFirst;
+		lastName = newLast;
+	}
+	
+	public void setEmail() {
+		email = firstName + "." + lastName + companySuffix;
+	}
+	
+	// sets department based on user input
+	public void setDepartment() {
+		Scanner sc = new Scanner(System.in);
+		int deptCode = 0;
+		
+		System.out.println("Enter code for employee's department:" + "\n1 - "
+				+ "Sales \n2 - Accounting \n3 - Marketing \n4 - None");
+		
+		//error checks for int code
+		while (!sc.hasNextInt()) {
+			sc.next();
+			System.out.println("Error. Please Enter a valid code.");
+		}
+		
+		deptCode = sc.nextInt();
+		
+		if (deptCode == 1)
+			department = "Sales";
+		else if (deptCode == 2)
+			department = "Accounting";
+		else if (deptCode == 3)
+			department = "Marketing";
+		else
+			department = "None";
+		
+		sc.close();
+	}
+	
+	// generates random password of ten characters
+	public void setPassword() {
+		password = "";
+		String passChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-;";
+				
+		for (int i = 0; i < 10; i++) {
+			password += passChars.charAt((int)(Math.random() * 47));
+		}
+	}
+	
+	public void changePassword() {setPassword();}
+	
+	public void setMailboxCapacity(int capacity) {
+		mailboxCapacity = capacity;
+	}
+	
+	// creates alternate email ending with random number [0-100]
+	public void setAlternateEmail() {
+		int rand = (int)(Math.random() * 100) + 1;
+		
+		alternateEmail = firstName + "." + lastName + rand + companySuffix;
+	}
+	
+	public void setCompanySuffix(String company) {
+		companySuffix = "@" + company + ".com";
+	}
+	
+	// get methods
+	public String getEmail() {return email;}
+	
+	public String getName() {return firstName + " " + lastName;}
+	
+	public String getDepartment() {return department;}
+	
+	public String getCompanySuffix() {return companySuffix;}
+	
+	public String getPassword() {return password;}
+	
+	public int getMailboxCapacity() {return mailboxCapacity;}
+	
+	public String getAlternateEmail() {return alternateEmail;}
+	
+	// display's all Obj info
+	public String getInfo() {
+		
+		String output = "DISPLAY NAME: " + getName() + "\nDEPARTMENT: " + getDepartment() +
+				"\nEMAIL: " + getEmail() + "\nALTERNATE EMAIL: " + getAlternateEmail() +
+				"\nPASSWORD: " + getPassword() + "\nMAILBOX CAPACITY: " + getMailboxCapacity();
+		
+		return output;
+	}
+
+}
